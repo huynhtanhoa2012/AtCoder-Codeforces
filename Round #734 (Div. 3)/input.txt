@@ -1,6 +1,1 @@
-5
-kzaaa
-codeforces
-archive
-y
-xxxxxx
+123 456 100
