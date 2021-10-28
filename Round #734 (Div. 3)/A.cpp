@@ -10,7 +10,7 @@ void solve(){
         c1 = x/3;
         c2 = c1;
     }
-    else if( x%3 == 1){
+    else if(x%3 == 1){
         c1 = x/3 + 1;
         c2 = x/3;
     }
