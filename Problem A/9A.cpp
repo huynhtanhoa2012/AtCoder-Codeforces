@@ -21,8 +21,5 @@ freopen("output.txt", "w", stdout);
     else if(a==5) cout <<"1/3"<<endl;
     else if(a==6) cout <<"1/6"<<endl;
 
-
-
-
     return 0;
 }
