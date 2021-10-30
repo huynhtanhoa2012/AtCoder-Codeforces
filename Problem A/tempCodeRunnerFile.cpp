@@ -1,2 +1,4 @@
-int ans = min(a[1].size(), a[2].size(), a[3].size());
-    // cout << ans; 
+ // cout << *it << " ";
+                    // set<int>::iterator x;
+                    // s.erase(x);
+                    // max--;
