@@ -10,7 +10,6 @@ int main(){
 freopen("input.txt", "r", stdin);
 freopen("output.txt", "w", stdout);
 #endif
- 
     int y, w;
     cin >> y >> w;
     int a = max(y, w);
