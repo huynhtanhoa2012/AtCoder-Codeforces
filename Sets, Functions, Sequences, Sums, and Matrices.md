@@ -110,3 +110,10 @@ Find formulae for the sequences with the following first five terms:
 > (b) an = 2n + 1, n = 0, 1, 2, . . . 
 
 > (c) an = (−1)n, n = 0, 1, 2 . . .
+
+## Summations
+> a(m), a(m+1), ..., a(n)
+
+<img src="Photos/summation.png" width="300">
+<img src="Photos/sumExample.png" width="300">
+<img src="Photos/UsefulFormula.png" width="300">
