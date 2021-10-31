@@ -11,16 +11,9 @@ freopen("input.txt", "r", stdin);
 freopen("output.txt", "w", stdout);
 #endif
  
-    ll n,k;
-    cin >> n >> k;
-    if (k <= (n+1)/2)
-    {
-        cout << 2*k-1 << endl;
-    }
-    else
-    {
-        k -= ((n+1)/2);
-        cout << 2*k << endl;
-    } 
+    string s;
+    cin >> s;
+    regex p("WUB");
+    cout<< regex_replace(s,p," ");
     return 0;
 }

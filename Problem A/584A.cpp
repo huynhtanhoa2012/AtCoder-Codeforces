@@ -11,16 +11,18 @@ freopen("input.txt", "r", stdin);
 freopen("output.txt", "w", stdout);
 #endif
  
-    ll n,k;
-    cin >> n >> k;
-    if (k <= (n+1)/2)
-    {
-        cout << 2*k-1 << endl;
+    int n, t;
+    cin >> n >> t;
+
+    if(n==1 and t==10) cout << -1 << endl;
+    else{
+        if(t==10) t=1;
+        cout << t;
+        while(n>1){
+            cout << "0";
+            n--;
+        }
     }
-    else
-    {
-        k -= ((n+1)/2);
-        cout << 2*k << endl;
-    } 
+     
     return 0;
 }
