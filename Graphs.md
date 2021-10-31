@@ -44,3 +44,100 @@ In a directed graph:
 A graph is **bipartite** if it is possible to color its nodes using two colors in such a way that no adjacent nodes have the same color.
 
 <img src="Photos/bipartite.png" width="200">
+
+
+## 7.2 Graph Representation
+
+### Adjeacency Lists
+ **An adjacency list** is an array A of separate lists. Each element of the array `Ai` is a list, which contains all the **vertices** that are adjacent to vertex i.
+
+ For a **weighted graph**, the weight or cost of the edge is stored along with the vertex in the list using **pairs**. 
+ 
+ In an **undirected graph**, if vertex `j` is in list `Ai` then vertex `i` will be in list `Aj`.
+* A1 → 2 → 4
+* A2 → 1 → 3
+* A3 → 2 → 4
+* A4 → 1 → 3
+
+<img src="Photos/list.png" width="200">
+
+* A1 → 2
+* A2 → 4
+* A3 → 1 → 4
+* A4 → 2
+
+<img src="Photos/list1.png" width="200">
+
+```c++
+vector <int> adj[10];
+
+int x, y, nodes, edges;
+cin >> nodes;      
+cin >> edges;       
+for(int i = 0;i < edges;++i)
+{
+    cin >> x >> y;
+    adj[x].push_back(y);        
+}
+
+for(int i = 1;i <= nodes;++i)
+{        
+    for(int j = 0;j < adj[i].size();++j){
+        if(j == adj[i].size() - 1)
+            cout << adj[i][j] << endl;
+        else
+            cout << adj[i][j] << " --> ";
+    }
+
+```
+
+
+### Adjacency Matrix
+
+* An adjacency matrix is a `VxV` binary matrix `A`. Element `Aij` is 1 if there is an edge from vertex `i` to vertex `j` else  is `0`
+* The adjacency matrix can also be modified for the **weighted graph** in which instead of storing 0 or 1 in , the weight or cost of the edge will be stored.
+
+
+
+* i/j: 1 2 3 4
+* 1 : 0 1 0 1
+* 2 : 1 0 1 0
+* 3 : 0 1 0 1
+* 4 : 1 0 1 0
+
+<img src="Photos/matrix.png" width="200">
+
+
+* i/j: 1 2 3 4
+* 1 : 0 1 0 0
+* 2 : 0 0 0 1
+* 3 : 1 0 0 1
+* 4 : 0 1 0 0
+
+<img src="Photos/matrix1.png" width="200">
+
+```c++
+bool A[10][10];
+
+void initialize()
+{
+    for(int i = 0;i < 10;++i)
+        for(int j = 0;j < 10;++j)
+            A[i][j] = false;
+}
+
+int x, y, nodes, edges;
+initialize();     
+cin >> nodes;     
+cin >> edges;    
+for(int i = 0;i < edges;++i)
+{
+    cin >> x >> y;
+    A[x][y] = true;     
+}
+```
+
+## Graph Traversal
+
+### Depth-First Search
+
