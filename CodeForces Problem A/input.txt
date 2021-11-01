@@ -1,6 +1,1 @@
-5
-xooox
-oxoxo
-soxoo
-oxoxo
-xooox
+7 9
