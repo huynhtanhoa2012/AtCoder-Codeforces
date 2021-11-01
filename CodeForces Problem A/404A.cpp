@@ -13,26 +13,25 @@ freopen("output.txt", "w", stdout);
  
     int n;
     cin >> n;
-    vector<string> s(n);
+    char s[400][400];
+    bool YES = true;
+    for(int i=0;i<n;i++){
+        cin >> s[i];
+    }
+
     for(int i=0;i<n;i++){
         for(int j=0; j<n;j++){
-            cin >> s[i][j];
-        }
-    }
-    bool check = true;
-    for(int i=0;i<n;i++){
-        int l = 0;
-        int r = n-1;
-        while(l<=r){
-            if(s[i][l] != s[i][r]){
-                check = false;
+            if(i==j || i==n-j-1){
+                if(s[i][j] != s[0][0] || s[i][j] == s[0][1]) YES = false;
             }
-            l++;
-            r--;
+            else{
+                if(s[i][j] != s[0][1] || s[i][j] == s[0][0]) YES = false;
+            }
         }
     }
-    if(check) cout << "YES";
+    if(YES) cout << "YES";
     else cout << "NO";
+    
 
     return 0;
 }
