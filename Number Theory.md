@@ -51,4 +51,4 @@ So, all factors of a number are its divisors. But not all divisors will be facto
 
 ## Representations of integers
 
-<img src="Photos/binary.png" width="500">
+<img src="Photos/binary.png" width="700">
