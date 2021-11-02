@@ -68,6 +68,46 @@ bool isPrime(int n){
 **Complexity: O(sqrt(N))**
 
 
+# Sieve of Eratosthenes
+
+## Why we need Sieve
+The idea behind is this: A number is prime, if none of the smaller prime numbers divides it
+
+> Preprocessing Time: O(N log(logN))
+>
+> Answers Query: O(1)
+>
+> Extra Space: O(N)
+```c++
+int n;
+vector<bool> is_prime(n+1, true);
+is_prime[0] = is_prime[1] = false;  
+
+for(int i= 2; i*i <= n; i++){
+    if(is_prime[i]){
+        for(int j = i*i; j<=n; j+=i){
+            is_prime[j] = false;
+        }
+    }
+}
+```
+# Prime Factorization
+The process of writing a number as the product of prime numbers is **prime factorization.**
+
+```c++
+void primeFactorization(int n){
+    for(int i=2; i<=n; i++){
+        if(n%i == 0){
+            int count = 0;
+            while(n%i == 0){
+                count++;
+                n /= i;
+            }
+            cout << i << "^" << count << endl;
+        }
+    }
+}
+```
 
 
 
@@ -91,84 +131,4 @@ bool isPrime(int n){
 
 
 
-
-
-
-
-
-## Divisibility and Modular Arithmetic
-
-Division of an integer by a positive integer produces `a quotient` and `a remainder`. Working with these remainders
-leads to modular arithmetic
-
-### Division
-When one integer is divided by a second non-zero integer, the quotient may or may not be an integer. 
-
-For example:
-> 12/3 = 4 is an integer, whereas 11/4 = 2.75 is not. 
-
-#### Definition 1
-> If a and b are integers with a != 0
-
-> we say that `a divides b` if there is an integer `c` such that `b = ac`
-
-> When a divides b we say that a is a `factor` or `divisor` of b. b is a `multiple` of a. The notation `a | b` denotes that a divides b
-
-> We can express `a | b` using quantifiers as `∃c(ac = b)`
-
-Example 1:
-> Determine whether `3 | 7` and whether `3 | 12` ?.
-
-> We see that `3 is not | 7`, because `7/3` is not an integer. On the other hand, `3 | 12` because 12/3 = 4.
-
-Example 2:
-
-Let `n` and `d` be positive integers. How many positive integers **not exceeding n** are divisible by d?
-> The positive integers divisible by `d` are all the integers of the form `dk`, where `k` is a positive integer.
-
-> Hence, the number of positive integers divisible by `d` that do not exceed `n` equals the number of integers k with `0 < dk ≤ n`, or with `0 < k ≤ n/d`. Therefore, there are `n/d` positive integers not exceeding `n` that are divisible by `d`.
-
-### Theorem 1
-Let `a, b and c` be integers and `a != 0` Then: 
-1. if a | b and a | c, then a | (b + c);
-2. if a | b, then a | bc for all integers c;
-3. if a | b and b | c, then a | c.
-
-
-<img src="Photos/divisor.png" width="400">
-
-The divisor is any number that divides another number. A factor, however, is a divisor that divides the number **entirely and leaves no remainder**. 
-
-So, all factors of a number are its divisors. But not all divisors will be factors.
-
-> `q` is called the quotient, and `r` is called the remainder. 
-
-> q = a **div** d, r = a **mod** d
-
-## Representations of integers
-
-<img src="Photos/binary.png" width="700">
-
-## Primes and Greatest Common Divisors
-
-### Primes
-An integer p greater than 1 is called **prime** if the only positive factors of `p` are `1` and `p`.
-A positive integer that is greater than 1 and is not prime is called composite.
-
-#### Theorem 1
-An integer p greater than 1 is called prime if the only positive factors of p are 1 and p.
-A positive integer that is greater than 1 and is not prime is called composite.
-
-> 100 = 2 · 2 · 5 · 5 = 2252,
-
-> 641 = 641,
-
-> 999 = 3 · 3 · 3 · 37 = 33 · 37,
-
-> 1024 = 2 · 2 · 2 · 2 · 2 · 2 · 2 · 2 · 2 · 2 = 210.
-
-## Greatest COmmon divisors and Least Common Multiples
-Let `a` and `b` be integers, not both zero. The largest integer `d` such that `d | a` and `d | b` is called the **greatest common divisor** of a and b. The greatest common divisor of a and b is denoted by gcd(a, b).
-
-Example:
 
