@@ -1,6 +1,131 @@
 # Number theory
 
-## Primality 
+# 1. Modular Arithmetic
+When one number is divided by another, the modulo operation finds the remainder. It is denoted by the % symbol.
+
+**Properties** 
+>(x + y) mod m = (x mod m + y mod m) mod m
+>
+>(x - y) mod m = (x mod m - y mod m) mod m
+>
+>(x * y) mod m = (x mod m * y mod m) mod m
+>
+>x^n mod m = (x mod m)^n mod m
+
+## When are these Properties used
+Assume that `a=10^18 , b=10^18 and c=10^9 + 7`. You have to find `(a*b)%c`;
+
+When you multiply a with b, the answer is `10^36`, which does not conform with the standard integer data types. Therefore, avoid this we used the properties.
+> (a * b)%c = ((a%c) * (b%c)) % c = (49 * 49) % (10^9 + 7) = 2401
+
+
+# Modular exponentiation
+Exponentiation is a mathematical operation that is expressed as `x^n` and computed as `x^n = x * x * x * x  n( times)`.
+
+## Basic Method
+the most basic solution is broken down into small problems.
+
+> x^n = x * x^(n-1) = x * x * x^(n-2)
+>
+> when n = 0; x = 1
+
+```c++
+int recursivePower(int x, int n){
+    if (n==0) return 1;
+    return x * recursivePower(x, n-1)
+}
+```
+```c++
+int iterativePower(int x, int n){
+    int result =1;
+    while(n>0){
+        result = result * x;
+        n--;
+    }
+    return result;
+}
+```
+**Time Complexity: O(n)**
+> However, wheere n can be as large as 10^18, this solution will not be suitable
+
+## Optimized Method
+Apply the basis of **Binary Exponentiation** relies on whether n is odd or even.
+
+**If n is even**
+> x^n = (x^2)^(n/2)
+
+**If n is odd**
+
+try and convert it into an even value
+> x^n = x * x^(n-1)   | This ensures n-1 is even
+
+Examples:
+
+>3^10 => (3^2)^5 => 9^5   (10 is even)
+>
+>9^5  => => 9 * 9^4 => 9 * (9^2)^2 => 9*(81^2)
+
+```c++
+int binaryExponentiation(int x, int n){
+    if(n==0) return 1;
+    else if (n%2==0){
+        return binaryExponentiation(x*x,n/2);
+    }
+    else 
+        return x*binaryExponentiation(x*x,(n-1)/2);
+}
+```
+**Time Complexity: O(log n)**
+
+> However storing answers that are too large for their respective datatypes is an issue with this method. In such instances, you must use modulus (%)
+
+```c++
+int modularExponentiation(int x,int n,int M)
+{
+    if(n==0)
+        return 1;
+    else if(n%2 == 0)    
+        return modularExponentiation((x*x)%M,n/2,M);
+    else                      
+        return (x*modularExponentiation((x*x)%M,(n-1)/2,M))%M;
+
+}
+```
+**Time Complexity: O(log n)**
+**Memory complexity: O(log N)**
+
+# 3. Greatest Common Divisor (GCD)
+The GCD of two or more numbers is the largest positive number that divides all the numbers that are considered.
+
+## Naive approach
+Traverse all the numbers from min(A,B) to 1 and check whether the current divides both A and B. If yes, it is the GCD of A and B.
+
+```c++
+int GCD(int A, int B) {
+    int m = min(A, B), gcd;
+    for(int i = m; i > 0; --i)
+        if(A % i == 0 && B % i == 0) {
+            gcd = i;
+            return gcd;
+        }
+}
+```
+**Time Complexity: O(min(A, B))**
+## Euclid's algorithm
+The idea behind this algorithm is GCD(A,B) = GCD(B, A%B). It will recurse until A%B = 0.
+```c++
+int GCD(int A, int B) {
+    if(A<B) swap(A,B);
+    if(B==0) return A;
+    else
+        return GCD(B, A % B);
+}
+```
+**Time Complexity: O(log(max(A, B)))**
+
+
+
+# Primality - Prime number
 Primality test is to determine whether the input integer is a prime number of not.
 
 Example:
@@ -70,89 +195,63 @@ bool isPrime(int n){
 
 # Sieve of Eratosthenes
 
-## Why we need Sieve
-The idea behind is this: A number is prime, if none of the smaller prime numbers divides it
+We can use the *Sieve of Eratosthenes* to find all the prime numbers that are less than or equal to a given number `N` or to find out whether a number is a prime number.
 
-> Preprocessing Time: O(N log(logN))
->
-> Answers Query: O(1)
->
-> Extra Space: O(N)
+The basic idea is that at each iteration one prime number is picked up and **all its multiples are eliminated**. After the elimination process is complete, all the unmarked numbers that remain are prime.
+
+### Pseudo code
+1. Mark all the numbers as prime numbers except 1
+2. Traverse over each prime numbers smaller than sqrt(N)
+3. For each prime number, mark its multiples as composite numbers
+4. Numbers, which are not the multiples of any number, will remain marked as prime number and others will change to composite numbers.
+
 ```c++
-void SieveOfEratosthenes(int n)
-{
-    bool prime[n + 1];
-    memset(prime, true, sizeof(prime));
- 
-    for (int p = 2; p * p <= n; p++)
-    {
-        if (prime[p] == true)
-        {
-            for (int i = p * p; i <= n; i += p)
-                prime[i] = false;
+void sieve(int N) {
+        bool isPrime[N+1];
+        for(int i = 0; i <= N;++i) {
+            isPrime[i] = true;
         }
-    }
-}
-```
-# Prime Factorization
-The process of writing a number as the product of prime numbers is **prime factorization.**
-
-```c++
-void primeFactorization(int n){
-    for(int i=2; i<=n; i++){
-        if(n%i == 0){
-            int count = 0;
-            while(n%i == 0){
-                count++;
-                n /= i;
+        isPrime[0] = false;
+        isPrime[1] = false;
+        for(int i = 2; i * i <= N; ++i) {
+            if(isPrime[i] == true) {     
+                // Mark all the multiples of i as composite               
+                for(int j = i * i; j <= N ;j += i)
+                    isPrime[j] = false;
             }
-            cout << i << "^" << count << endl;
         }
     }
-}
 ```
+**Complexity: O(NloglogN)**
+
+
+# Fast Factorization
+Modification of Sieve of Eratosthenes for fast factorization
+
 ```c++
-vector<int> factors(int n) {
-    vector<int> f;
-    for (int x = 2; x*x <= n; x++) {
-        while (n%x == 0) {
-            f.push_back(x);
-            n /= x;
+vector<int> factorize(int n) {
+    vector<int> res;
+    for (int i = 2; i * i <= n; ++i) {
+        while (n % i == 0) {
+            res.push_back(i);
+            n /= i;
         }
     }
-    if (n > 1) f.push_back(n);
-    return f;
+    if (n != 1) {
+        res.push_back(n);
+    }
+    return res;
 }
 ```
- >Note that each prime factor appears in the vector as many times as it divides the number. For example, 24 = 2^3·3, so the result of the function is `[2,2,2,3]`.
+## Sieve of Eratosthenes on the segment:
+Sometimes you need to find all the primes that are in the range [L..R] and not in [1..N] , where R is a large number.
+
+You are allowed to create an array of integers with size (R - L + 1)
 
 
-# Euclid’s algorithm
-
-* *The greatest common divisor* of a and b, `gcd(a,b)`, is the greatest number that divides both a and b, 
-
-* *The least common multiple* of a and b, `lcm(a,b)`, is the smallest number that is divisible by both a and b. 
-
-For example:
-
-> gcd(24,36) = 12 and lcm(24,36) = 72.
-
-### Algorithm
-> gcd(a, b) = a | b = 0 
-> 
-> gcd(a, b) = gcd(b, a mod b) | b != 0
-
-For example:
-> gcd(24,36) = gcd(36,24) = gcd(24,12) = gcd(12,0) = 12
-
-```c++
-int gcd(int a, int b) {
-    if(b > a) swap(a,b);
-    if (b == 0) return a;
-    return gcd(b, a%b);
-}
-```
 ## Euler’s totient function
+Euler's Totient function is a function that is related to getting the number of numbers that are coprime to a certain number  that are less than or equal to it
+
 Numbers `a` and `b` are coprime if gcd(a,b) = 1.
 
 For example: 
