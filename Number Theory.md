@@ -94,7 +94,7 @@ int modularExponentiation(int x,int n,int M)
 **Time Complexity: O(log n)**
 **Memory complexity: O(log N)**
 
-# 3. Greatest Common Divisor (GCD)
+# 2. Greatest Common Divisor (GCD)
 The GCD of two or more numbers is the largest positive number that divides all the numbers that are considered.
 
 ## Naive approach
@@ -125,7 +125,7 @@ int GCD(int A, int B) {
 
 
 
-# 4. Primality - Prime number
+# 3. Primality - Prime number
 Primality test is to determine whether the input integer is a prime number of not.
 
 Example:
@@ -193,7 +193,7 @@ bool isPrime(int n){
 **Complexity: O(sqrt(N))**
 
 
-# 5. Sieve of Eratosthenes
+# 4. Sieve of Eratosthenes
 
 We can use the *Sieve of Eratosthenes* to find all the prime numbers that are less than or equal to a given number `N` or to find out whether a number is a prime number.
 
