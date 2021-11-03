@@ -79,14 +79,17 @@ The idea behind is this: A number is prime, if none of the smaller prime numbers
 >
 > Extra Space: O(N)
 ```c++
-int n;
-vector<bool> is_prime(n+1, true);
-is_prime[0] = is_prime[1] = false;  
-
-for(int i= 2; i*i <= n; i++){
-    if(is_prime[i]){
-        for(int j = i*i; j<=n; j+=i){
-            is_prime[j] = false;
+void SieveOfEratosthenes(int n)
+{
+    bool prime[n + 1];
+    memset(prime, true, sizeof(prime));
+ 
+    for (int p = 2; p * p <= n; p++)
+    {
+        if (prime[p] == true)
+        {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
         }
     }
 }
@@ -108,12 +111,65 @@ void primeFactorization(int n){
     }
 }
 ```
+```c++
+vector<int> factors(int n) {
+    vector<int> f;
+    for (int x = 2; x*x <= n; x++) {
+        while (n%x == 0) {
+            f.push_back(x);
+            n /= x;
+        }
+    }
+    if (n > 1) f.push_back(n);
+    return f;
+}
+```
+ >Note that each prime factor appears in the vector as many times as it divides the number. For example, 24 = 2^3·3, so the result of the function is `[2,2,2,3]`.
 
 
+# Euclid’s algorithm
 
+* *The greatest common divisor* of a and b, `gcd(a,b)`, is the greatest number that divides both a and b, 
 
+* *The least common multiple* of a and b, `lcm(a,b)`, is the smallest number that is divisible by both a and b. 
 
+For example:
 
+> gcd(24,36) = 12 and lcm(24,36) = 72.
+
+### Algorithm
+> gcd(a, b) = a | b = 0 
+> 
+> gcd(a, b) = gcd(b, a mod b) | b != 0
+
+For example:
+> gcd(24,36) = gcd(36,24) = gcd(24,12) = gcd(12,0) = 12
+
+```c++
+int gcd(int a, int b) {
+    if(b > a) swap(a,b);
+    if (b == 0) return a;
+    return gcd(b, a%b);
+}
+```
+## Euler’s totient function
+Numbers `a` and `b` are coprime if gcd(a,b) = 1.
+
+For example: 
+> ϕ(12) = 4, because 1, 5, 7 and 11 are coprime to 12.
+
+```c++
+int findCoprime(int n)
+{
+    int result = 1;
+    for (int i = 2; i < n; i++)
+        if (gcd(i, n) == 1)
+            result++;
+    return result;
+}
+```
+
+# Modular arithmetic 
 
 
 
