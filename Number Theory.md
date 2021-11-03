@@ -19,10 +19,10 @@ When you multiply a with b, the answer is `10^36`, which does not conform with t
 > (a * b)%c = ((a%c) * (b%c)) % c = (49 * 49) % (10^9 + 7) = 2401
 
 
-# Modular exponentiation
+## Modular exponentiation
 Exponentiation is a mathematical operation that is expressed as `x^n` and computed as `x^n = x * x * x * x  n( times)`.
 
-## Basic Method
+### Basic Method
 the most basic solution is broken down into small problems.
 
 > x^n = x * x^(n-1) = x * x * x^(n-2)
@@ -48,7 +48,7 @@ int iterativePower(int x, int n){
 **Time Complexity: O(n)**
 > However, wheere n can be as large as 10^18, this solution will not be suitable
 
-## Optimized Method
+### Optimized Method
 Apply the basis of **Binary Exponentiation** relies on whether n is odd or even.
 
 **If n is even**
@@ -125,7 +125,7 @@ int GCD(int A, int B) {
 
 
 
-# Primality - Prime number
+# 4. Primality - Prime number
 Primality test is to determine whether the input integer is a prime number of not.
 
 Example:
@@ -134,7 +134,7 @@ Example:
 > Input: 12  output: false
 
 
-### Naive Approach
+## Naive Approach
 ```c++
 bool isPrime(int n){
     if(n==1){
@@ -151,7 +151,7 @@ bool isPrime(int n){
 ```
 **Complexity: O(n)**
 
-### Better Approach
+## Better Approach
 All divisors of a number N occur in pairs of (a,b):   `a*b= N`
 
 Example:
@@ -193,7 +193,7 @@ bool isPrime(int n){
 **Complexity: O(sqrt(N))**
 
 
-# Sieve of Eratosthenes
+# 5. Sieve of Eratosthenes
 
 We can use the *Sieve of Eratosthenes* to find all the prime numbers that are less than or equal to a given number `N` or to find out whether a number is a prime number.
 
@@ -225,7 +225,7 @@ void sieve(int N) {
 **Complexity: O(NloglogN)**
 
 
-# Fast Factorization
+## Fast Factorization
 Modification of Sieve of Eratosthenes for fast factorization
 
 ```c++
@@ -267,8 +267,6 @@ int findCoprime(int n)
     return result;
 }
 ```
-
-# Modular arithmetic 
 
 
 
