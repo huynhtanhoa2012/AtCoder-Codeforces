@@ -1,8 +1,3 @@
-while(r <= n-1){
-            if(sections[i] >= sections[r]){
-                wateredSections[i]++;
-                r++;
-            }
-            else break;
-            
-        }
+for(int i=0; i<m;i++){
+    //     cin >> s[i].second >> s[i].first;
+    // }
