@@ -1,3 +1,5 @@
 for(int i=0; i<m;i++){
-    //     cin >> s[i].second >> s[i].first;
-    // }
+        int take = min(n, s[i].second);
+        ans = take * s[i].first;
+        n =  n - take;
+    }
