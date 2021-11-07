@@ -2,36 +2,45 @@
 
 ## 7.1 Graph Terminology
 A graph consists of **nodes** (also called **vertices**) that are connected with **edges**.
-* `n`: number of nodes
+* `n`: number of nodes (vertices)
 * `m`: number of edges
 
-A **path** leads from a node to another node through the edges of the graph.
-
-<img src="Photos/path.png" width="200">
-
-The **length** of a path is the number of edges in it.
-
-A **cycle** is a path where the first and last node is the same.
-
-<img src="Photos/cycle.png" width="200">
-
-A graph is **connected** if there is a path between any two nodes.
-
-<img src="Photos/connected.png" width="200">
-
-A **tree** is a connected graph that does not contain **cycles**.
-
-<img src="Photos/tree.png" width="200">
-
-In a **directed** graph, the edges can be traversed in one direction only.
-
-<img src="Photos/directed.png" width="200">
-
-In a **weighted** graph, each edge is assigned a weight.
+### Weighted and Unweighted Graph
+Graphs whose edges or paths have values called weights. Edges value can represent weight/cost/length.
 
 <img src="Photos/weighted.png" width="200">
 
-Two nodes are **neighbors or adjacent** if there is an edge between them. The **degree** of a node is the number of its neighbors.
+### Directed and Undirected Graph
+Edges are directed from one node to another
+
+<img src="Photos/directed.png" width="200">
+
+### Path
+A path leads from a node to another node through the edges of the graph.
+
+<img src="Photos/path.png" width="200">
+
+### Cycle
+A cycle is a path where the first and last node is the same.
+
+<img src="Photos/cycle.png" width="200">
+
+### Connected
+A graph is connected if there is a path between any two nodes.
+
+<img src="Photos/connected.png" width="200">
+
+### Tree
+A tree is a connected graph that does not contain **cycles**.
+
+<img src="Photos/tree.png" width="200">
+
+### Neightbors or adjacent
+Two nodes are **neighbors or adjacent** if there is an edge between them. 
+
+
+### Degree
+The degree of a node is the number of its neighbors.
 
 <img src="Photos/degrees.png" width="200">
 
@@ -41,19 +50,22 @@ In a directed graph:
 
 <img src="Photos/indegrees.png" width="200">
 
+### Bipartite
 A graph is **bipartite** if it is possible to color its nodes using two colors in such a way that no adjacent nodes have the same color.
 
 <img src="Photos/bipartite.png" width="200">
 
 
-## 7.2 Graph Representation
+# 7.2 Graph Representation
 
-### Adjeacency Lists
- **An adjacency list** is an array A of separate lists. Each element of the array `Ai` is a list, which contains all the **vertices** that are adjacent to vertex i.
+## Adjacency Lists
+**An adjacency list** is an array A of separate lists. Each element of the array `Ai` is a list, which contains all the **vertices** that are adjacent to vertex i.
 
- For a **weighted graph**, the weight or cost of the edge is stored along with the vertex in the list using **pairs**. 
- 
- In an **undirected graph**, if vertex `j` is in list `Ai` then vertex `i` will be in list `Aj`.
+**Advantages**
+* Easy get all the neighbors
+
+
+
 * A1 → 2 → 4
 * A2 → 1 → 3
 * A3 → 2 → 4
@@ -92,12 +104,14 @@ for(int i = 1;i <= nodes;++i)
 ```
 
 
-### Adjacency Matrix
+## Adjacency Matrix
+* An adjacency matrix is a `VxV` binary matrix `A`. 
 
-* An adjacency matrix is a `VxV` binary matrix `A`. Element `Aij` is 1 if there is an edge from vertex `i` to vertex `j` else  is `0`
-* The adjacency matrix can also be modified for the **weighted graph** in which instead of storing 0 or 1 in , the weight or cost of the edge will be stored.
+**Advantages**
+* Easy to check an edge between 2 vertices O(1).
 
-
+**Disadvantages**
+* Too much memory O(n^2)
 
 * i/j: 1 2 3 4
 * 1 : 0 1 0 1
@@ -106,15 +120,6 @@ for(int i = 1;i <= nodes;++i)
 * 4 : 1 0 1 0
 
 <img src="Photos/matrix.png" width="200">
-
-
-* i/j: 1 2 3 4
-* 1 : 0 1 0 0
-* 2 : 0 0 0 1
-* 3 : 1 0 0 1
-* 4 : 0 1 0 0
-
-<img src="Photos/matrix1.png" width="200">
 
 ```c++
 bool A[10][10];
@@ -137,7 +142,47 @@ for(int i = 0;i < edges;++i)
 }
 ```
 
-## Graph Traversal
+# Graph Traversal
 
-### Depth-First Search
+## Breadth First Search
+BFS is a traversing algorithm where you should start traversing from a selected node and traverse the garph layerwise thus exploring the neighbour nodes
 
+<img src="Photos/bfs.png" width="400">
+
+**Traverse as follows**:
+1. First, move horizontally and visit all the nodes of the current layer.
+2. Move to the next layer.
+
+### Traversing child nodes
+* Breadth-first search (BFS) visits the nodes in increasing order of their distance from the starting node. Thus, we can calculate the distance from the starting node to all other nodes using breadth-first search. 
+
+**Complexity: O(n+m)** where n is nodes, m is edges
+
+### Implementation
+* A typical implementation is based on a queue that contains nodes. At each step, the next node in the queue will be processed.
+* New nodes are always added to the end of the queue, and the node at the beginning of the queue is the next node to be processed.'
+
+```c++ 
+queue<int> q;
+bool visited[N];
+int distance[N];
+```
+* `q`: contains nodes to be processed
+* `visited[N]`: indicates which nodes the search has already visited
+* `distance[N]`: contains the distances from the starting node to all nodes of the graph
+```c++
+visited[x] = true;
+distances[x] = 0;
+q.push(x);
+
+while(!q.empty()){
+    int s = q.front(); q.pop();
+    // process node s
+    for (auto u : adj[s]) {
+        if (visited[u]) continue;
+        visited[u] = true;
+        distance[u] = distance[s]+1;
+        q.push(u);
+    }
+}
+```
