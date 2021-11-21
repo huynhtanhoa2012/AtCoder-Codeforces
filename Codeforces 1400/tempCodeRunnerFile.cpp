@@ -1,4 +1,3 @@
-for(int j=0; j<(n/2); j++){
-        //     cout << x+1 << " " << n*n - x << " ";
-        //     x 
-        // }
+for(int i=0; i<n; i++){
+    //     cout << s1[i];
+    // }

@@ -1,101 +1,131 @@
 # Standard Library
 
-## Vector
+
+## Containers
+<img src="Photos/containers.png" width="500">
+
+* Multiset: can contain duplicate values
+* Multimap: can contain duplicate values
+* Priority Queue:
+    * get maximum elements
+    * get minimum elements
+    * remove maximum/minimum elements
+    * insert elements
+
+## Array (Classic Array)
+* Pass an array into a function is **passed by reference**
+* When working with array **need to pass the size of array**.
+* Size of array in main function is differnt with size of array in function.
+> int arr[] <=> int * arr
 
 ```c++
-
-// This is create an array of 10 vector<int>
-vector<int> v[10];
-
-// Use parenthese() instead of brackets[]
-vector<int> v(10);
-
-//Check vector is non empty
-if(!v.empty()) cout << "Non-empty";
+int arr[] = {1,5,4,3,2};
+int n = sizeof(arr)/sizeof(int);
 ```
-1. Pushback adds an element to the end of vector, increasing its size by one.
+
+#### Array in STL
+* All STL containers **pass by values**
+* Hence, if we want to modify the array need to pass by reference.
+* Using keyword `const` to pass array into function (good practice)
+
+* Some methods:
+    * `at(i)`: get ith element
+    * `front()`: get front element
+    * `back()`: get back element
 ```c++
-for(int i = 1; i < 1000000; i *= 2) {
-    v.push_back(i);
+void updateArray(array<int,6> &arr, int i, int val){
+    arr[i] = val;
 }
-int elements_count = v.size();
+int main(){
+    array<int,6> arr = {1,2,3,6,7,8};
+    updateArray(arr, 0, 100);
+
+    // Classic sorting
+    int arr[] = {1,2,3,6,7,8};
+    sort(arr, arr+n);
+
+    //STL sorting
+    sort(arr.begin, arr.end())
+
+    // Fill.
+    array<int, 10> fives;
+    fives.fill(5);
+
+    // For each loop
+    for(auto x : fives)
+}
 ```
 
-2. Initialization
+
+## Vector
+Some differences with array:
+
+* Resize itself automatically when an element is inserted
+* Contiguous store locations, reallocation happens when underlying array is full.
+* Everytime doubling happens(when the capacity is full) it took linear time O(n) to double(`push_back()` function)
+    * we can use `resever()` function to prevent doubling happens regularly.
+
+Some methods:
+* `pop_back()`, `push_back()`, `reserve()`, `size()`, `clear()`
+
 ```c++
-vector< int > v1;
+//Empty constructor
+vector<int> first;
 
-vector< int > v2 = v1;
-vector< int > v3(v1);   // v2 and v3 are the same
+// Fill constructor
+vector<int> second(4,20);
 
-vector<int> Data(1000);
-vector<string> names(20, “Unknown”);
-```
+// Range constructor
+int numbers[] = {10,20,30,40};
+vector<int> third(numbers, numbers+4);
 
-3. Multimensional arrays
-```c++
+// Copy constructor
+vector<int> fourth(third);
+
+// Another way 
+vector<int> fifth = {1,2,3,4,5};
+
+// Multimensional
 vector<vector<int>> Matrix;
 
-int N, M;
-vector<vector<int>> Matrix(N, vector<int>(M, -1));
-```
-
-4. When vector is **passed as a parameter** to some function, a copy of vector is actually created. It may take a lot of time and memory to create new vectors when they are not really needed.
-
-```c++
-// Never do this unluess we are sure what to do
-void some_function(vector<int> v) {...}
-
-// Instead, using this
+// Good practice pass vector as reference into function
 void some_function(const vector<int> &v){...}
 
-// If we want to change the contenst of vector
+// If we want to change the content of vector
 void some_function(vector<int> &v) {...}
 ```
-5. Data manipulation
+
+## Deque
+* Sequence container with dynamic sizes that can be expanded or contracted on both ends (front or back)
+* It not guarantedd to store all its elements in contiguous storage locations: accessing elements in a deque by offsetting a pointer to another element causes undefined behavior
+* Eleemnts of a deque can be scattered in different chunks of storage
+
+Soem methods:
+* pop_back(), pop_front()
+* push_back(). push_front()
+* back(), front()
+* clear(), size()
+
 ```c++
+deque<int> first;
+deque<int> second(4,100);
+deque<int> third(second.begin(), second.end());
+deque<int> fourth(third);
 
-vector< int > v;
-v.insert(1, 42); // Insert value 42 after the first
-v.erase();
-```
+deque<int> dq(10);
 
-## Pairs
-Pairs are compared first-to-second element.
-```c++
-template< typename T1, typename T2 > struct pair {
-    T1 first;
-    T2 second;
-};
+for(int i=0; i<10; i++){
+    dq[i] = i*i;
+}
 
-pair<string, pair< int,int > > P;
-string s = P.first; // extract string
-int x = P.second.first; // extract first int
-int y = P.second.second; // extract second int
-```
-## Iterators
-Iterators are the most general way to access data containers
-```c++
-#todo
+for(auto x: dq) cout << x << " ";
 
-// link: https://www.youtube.com/watch?v=SgcHcbQ0RCQ&ab_channel=TheCherno
-```
-
-## String
-* Beware of **(s.length()-1)** on empty string because s.length() is `unsigned` and `unsigned(0) – 1` is definitely not what you are expecting!
-```c++
-string s = “hello”;
-string
-s1 = s.substr(0, 3), // “hel”
-s2 = s.substr(1, 3), // “ell”
-s3 = s.substr(0, s.length()-1), “hell”
-s4 = s.substr(1); // “ello”
+for(int i=0; i<10; i++){
+    cout << dq.at(i);
+}
 ```
 
 ## Set
-It’s always hard to decide which kind of container to describe first – set or map.
-
-Consider we need a container with the following features:
 * add an element, but do not allow duples [duplicates?]
 * remove elements
 * get count of elements (distinct elements)
@@ -110,9 +140,10 @@ for(int i = 1; i <= 100; i++) {
 }
 if(s.find(42) != s.end()) {...}
 ```
->  it’s impossible to take the element in set **by index**
 
-The only way to traverse the elements of set is to use iterators.
+* It’s impossible to take the element in set **by index**
+* The only way to traverse the elements of set is to use iterators.
+
 ```c++
 set< int > S;
 
@@ -122,14 +153,21 @@ for(set<int>::const_iterator it = S.begin(); it != S.end(); it++) {
 }
 ```
 
-## Map
+## String
+* Beware of **(s.length()-1)** on empty string because s.length() is `unsigned` and `unsigned(0) – 1` is definitely not what you are expecting!
 ```c++
-map< string, int > M;
-M[“Top”] = 1;
-M[“Coder”] = 2;
-M[“SRM”] = 10;
-
-if(M.find(“the meaning”) != M.end() && M.find(“the meaning”)->second == 42) { 
-    cout << “Don’t Panic!” << endl;
-}
+string s = “hello”;
+string
+s1 = s.substr(0, 3), // “hel”
+s2 = s.substr(1, 3), // “ell”
+s3 = s.substr(0, s.length()-1), “hell”
+s4 = s.substr(1); // “ello”
 ```
+## Stack, Queue 
+Done
+## Map
+Done
+
+## Priority Queue
+
+## Hash Table
