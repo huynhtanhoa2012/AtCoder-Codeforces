@@ -11,6 +11,44 @@ Output : 3377733333332222
 
 */
 
+string addNumbers(string s1, string s2){
+
+    // Make sure s2 is longer
+    if(s1.length() > s2.length()){
+        swap(s1, s2);
+    }
+
+    // 1. reverse both strings
+    reverse(s1.begin(), s1.end());
+    reverse(s2.begin(), s2.end());
+
+    // 2. add 2 numbers from 0 to s1 length
+    string result = "";
+    int carry = 0;
+    for(int i=0; i<s1.length(); i++){
+        int sum = (s1[i]-'0') + (s2[i]-'0') + carry;
+        result.push_back(sum%10 + '0');
+        carry = sum/10;
+    }
+
+    // 3. continue calculate the remaining of s2 length
+    for(int i=s1.length(); i<s2.length(); i++){
+        int sum = (s2[i]-'0') + carry;
+        result.push_back(sum%10 + '0');
+        carry = sum/10;
+    }
+
+    // IF a carry is generated
+    if(carry){
+        result.push_back(carry);
+    }
+
+    // Reverse the final result
+    reverse(result.begin(), result.end());
+    return result;
+
+}
+
 
  
 int main(){
@@ -20,12 +58,9 @@ freopen("input.txt", "r", stdin);
 freopen("output.txt", "w", stdout);
 #endif
     
-    // 1) Reverse both strings. 
-    // 2) Keep adding digits one by one from 0’th index (in reversed strings) 
-    // to end of smaller string, append the sum % 10 to end of result and keep track of carry as sum/10. 
-    // 3) Finally reverse the result. 
     
-    
-    
+    string s1, s2;
+    cin >> s1 >> s2;
+    cout << addNumbers(s1, s2);
     
 }
