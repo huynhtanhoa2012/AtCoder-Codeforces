@@ -147,7 +147,7 @@ for(int i = 0;i < edges;++i)
 ## Breadth First Search
 BFS is a traversing algorithm where you should start traversing from a selected node and traverse the garph layerwise thus exploring the neighbour nodes
 
-<img src="Photos/bfs.png" width="400">
+<img src="Photos/bfs.png" width="300">
 
 **Traverse as follows**:
 1. First, move horizontally and visit all the nodes of the current layer.
@@ -162,14 +162,6 @@ BFS is a traversing algorithm where you should start traversing from a selected 
 * A typical implementation is based on a queue that contains nodes. At each step, the next node in the queue will be processed.
 * New nodes are always added to the end of the queue, and the node at the beginning of the queue is the next node to be processed.'
 
-```c++ 
-queue<int> q;
-bool visited[N];
-int distance[N];
-```
-* `q`: contains nodes to be processed
-* `visited[N]`: indicates which nodes the search has already visited
-* `distance[N]`: contains the distances from the starting node to all nodes of the graph
 ```c++
 visited[x] = true;
 distances[x] = 0;
@@ -186,3 +178,6 @@ while(!q.empty()){
     }
 }
 ```
+
+# Shortest Path
+BFS helps to find shortest path in undirected graph.
