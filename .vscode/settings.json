@@ -17,6 +17,8 @@
         "initializer_list": "cpp",
         "regex": "cpp",
         "sstream": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "bitset": "cpp",
+        "utility": "cpp"
     }
 }
