@@ -20,5 +20,6 @@
         "complex": "cpp",
         "bitset": "cpp",
         "utility": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
